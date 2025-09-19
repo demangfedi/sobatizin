@@ -1,0 +1,123 @@
+// Prisma schema for Sobat Izin backend models
+// Database: SQLite for development; switch provider via env when needed
+// Timezone defaults to Asia/Jakarta (enforced at application level)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = env("DATABASE_PROVIDER", "sqlite")
+  url      = env("DATABASE_URL", "file:./dev.db")
+}
+
+enum UserRole {
+  client
+  admin
+}
+
+enum ServiceType {
+  cv
+  pt
+  yayasan
+  perkumpulan
+  koperasi
+  sbu
+  skk
+  bpom
+  sni
+  iso
+}
+
+enum OrderStatus {
+  pending
+  in_progress
+  completed
+}
+
+enum HistoryActorRole {
+  admin
+  client
+}
+
+enum LeadStatus {
+  new
+  qualified
+  converted
+  archived
+}
+
+enum FileType {
+  receipt
+  final
+}
+
+model User {
+  id           String    @id @default(cuid())
+  name         String
+  email        String    @unique
+  phone        String?
+  role         UserRole  @default(client)
+  passwordHash String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  orders       Order[]
+}
+
+model Order {
+  id            String         @id @default(cuid())
+  client        User           @relation(fields: [clientId], references: [id])
+  clientId      String
+  businessName  String
+  serviceType   ServiceType
+  status        OrderStatus    @default(pending)
+  orderDate     DateTime       @default(now())
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  history       OrderHistory[]
+  files         FileUpload[]
+
+  @@index([clientId])
+  @@index([status, orderDate(desc)])
+  @@index([serviceType])
+}
+
+model OrderHistory {
+  id             String          @id @default(cuid())
+  order          Order           @relation(fields: [orderId], references: [id])
+  orderId        String
+  status         OrderStatus
+  updatedAt      DateTime        @default(now())
+  updatedByRole  HistoryActorRole
+
+  @@index([orderId, updatedAt(desc)])
+}
+
+model ContactLead {
+  id          String      @id @default(cuid())
+  name        String
+  email       String
+  phone       String
+  serviceType ServiceType
+  note        String?
+  status      LeadStatus  @default(new)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([status, createdAt(desc)])
+}
+
+model FileUpload {
+  id               String     @id @default(cuid())
+  order            Order      @relation(fields: [orderId], references: [id])
+  orderId          String
+  type             FileType
+  originalFilename String
+  mimeType         String
+  size             Int
+  checksum         String
+  path             String
+  createdAt        DateTime   @default(now())
+
+  @@index([orderId, type])
+}
