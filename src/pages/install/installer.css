@@ -1,0 +1,254 @@
+:root {
+  color-scheme: light;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  margin: 0;
+  background-color: #f5f6fa;
+  color: #2f3640;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+.installer-wrapper {
+  max-width: 1080px;
+  margin: 48px auto;
+  padding: 32px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+}
+
+.installer-intro h1 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 2rem;
+}
+
+.installer-intro p {
+  margin-top: 0;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.installer-checklist-section {
+  margin-top: 32px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.section-header h2 {
+  margin: 0;
+}
+
+.section-header button {
+  background-color: transparent;
+  border: 1px solid #2563eb;
+  border-radius: 6px;
+  padding: 8px 16px;
+  color: #2563eb;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.section-header button:hover:not(:disabled) {
+  background-color: rgba(37, 99, 235, 0.08);
+}
+
+.section-header button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.installer-checklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.installer-checklist li {
+  display: flex;
+  gap: 16px;
+  padding: 16px 20px;
+  align-items: center;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.installer-checklist li:last-child {
+  border-bottom: none;
+}
+
+.installer-checklist li.failed {
+  background-color: #fef2f2;
+}
+
+.installer-checklist li.passed {
+  background-color: #ecfdf5;
+}
+
+.installer-checklist .indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background-color: #d1d5db;
+  flex-shrink: 0;
+}
+
+.installer-checklist li.passed .indicator {
+  background-color: #22c55e;
+}
+
+.installer-checklist li.failed .indicator {
+  background-color: #ef4444;
+}
+
+.installer-checklist strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.installer-checklist p {
+  margin: 0;
+  color: #4b5563;
+  font-size: 0.95rem;
+}
+
+.installer-checklist.empty {
+  border: 1px dashed #cbd5f5;
+  padding: 16px;
+  text-align: center;
+  color: #4b5563;
+}
+
+.installer-form {
+  margin-top: 32px;
+}
+
+.form-grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+fieldset {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  background-color: #f9fafb;
+  min-width: 0;
+}
+
+legend {
+  font-weight: 600;
+  padding: 0 8px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+  font-weight: 500;
+  color: #111827;
+}
+
+label input,
+label select,
+label textarea {
+  border: 1px solid #cbd5f5;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 1rem;
+  color: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+label input:focus,
+label select:focus,
+label textarea:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-alert {
+  margin-top: 24px;
+  padding: 16px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.form-alert.error {
+  background-color: #fef2f2;
+  border: 1px solid #ef4444;
+  color: #b91c1c;
+}
+
+.form-alert.success {
+  background-color: #ecfdf5;
+  border: 1px solid #22c55e;
+  color: #15803d;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+.form-actions button {
+  background-color: #2563eb;
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 28px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-actions button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 20px rgba(37, 99, 235, 0.2);
+}
+
+.form-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .installer-wrapper {
+    margin: 24px;
+    padding: 20px;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .form-actions {
+    justify-content: stretch;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
+}
